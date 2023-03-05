@@ -98,6 +98,7 @@ class SnekEnv(gym.Env):
 
         if self.done:
             self.reward = -10
+
         info = {}
 
         head_x = self.snake_head[0]

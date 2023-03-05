@@ -30,8 +30,8 @@ img = np.zeros((500, 500, 3), dtype='uint8')
 # Initial Snake and Apple position
 snake_position = [[250, 250], [240, 250], [230, 250]]
 apple_position = [random.randrange(1, 50) * 10, random.randrange(1, 50) * 10]
-score = 0
 prev_button_direction = 1
+score = 0
 button_direction = 1
 snake_head = [250, 250]
 while True:

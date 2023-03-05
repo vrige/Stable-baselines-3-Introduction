@@ -19,6 +19,7 @@ model = PPO('MlpPolicy', env, verbose=1, tensorboard_log=logdir)
 
 TIMESTEPS = 10000
 iters = 0
+
 while True:
 	iters += 1
 	model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name=f"PPO")

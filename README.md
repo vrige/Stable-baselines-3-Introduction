@@ -1,5 +1,5 @@
 # Stable-baselines-3-Introduction
-
+ 
 Install the following packets: "torch","stable-baselines3","box2d-py","pyglet" (1.5.27),"opencv-python", "tensorboard" and "gym"
 
 the tutorial can be found at the following link:
