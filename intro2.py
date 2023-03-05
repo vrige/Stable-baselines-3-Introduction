@@ -19,6 +19,7 @@ TIMESTEPS = 10000
 # let's try to use the RL algorithm A2C
 model = A2C("MlpPolicy", env, verbose=1, tensorboard_log=logs_dir)
 
+
 for i in range(1,10):
     # This allows us to see the actual total number of timesteps for the model rather than resetting every iteration
     # If you specify different tb_log_name in subsequent runs, you will have split graphs
