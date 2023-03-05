@@ -1,5 +1,6 @@
 import gym
-from stable_baselines3 import A2C
+from stable_baselines3 import PPO
+
 env = gym.make("LunarLander-v2")
 
 env.reset()
@@ -15,9 +16,11 @@ print("a sample of observation space: ", env.observation_space.sample())
 #     obs, reward, done, info = env.step(env.action_space.sample()) # perform a random action
 #     print(reward)
 
+TIMESTEPS = 10000
+
 # let's try to use the RL algorithm A2C
-model = A2C("MlpPolicy", env, verbose=1)
-model.learn(total_timesteps=10000)
+model = PPO("MlpPolicy", env, verbose=1)
+model.learn(total_timesteps=TIMESTEPS)
 
 episodes = 10
 
