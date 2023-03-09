@@ -1,4 +1,6 @@
 # our environement here is adapted from: https://github.com/TheAILearner/Snake-Game-using-OpenCV-Python/blob/master/snake_game_using_opencv.ipynb
+# notice that the self.observation_space in the init must be dtype=np.float64 (and not dtype=np.float32 as in the tutorial)
+# otherwise it does not work (it doesn't pass the stable_baseline check method)
 import gym
 from gym import spaces
 import numpy as np
@@ -41,7 +43,7 @@ class SnekEnv(gym.Env):
         self.action_space = spaces.Discrete(4)
         # Example for using image as input (channel-first; channel-last also works):
         self.observation_space = spaces.Box(low=-500, high=500,
-                                            shape=(5 + SNAKE_LEN_GOAL,), dtype=np.float32)
+                                            shape=(5 + SNAKE_LEN_GOAL,), dtype=np.float64)
 
     def step(self, action):
         self.prev_actions.append(action)
@@ -95,8 +97,19 @@ class SnekEnv(gym.Env):
             cv2.imshow('a', self.img)
             self.done = True
 
+        # Quite simply, this agent learned that living is very painful and the quickest way to the highest reward is to go
+        # ahead and stop living. You can see that reward was typically a very large negative and then it rises as episode
+        # length decreases up to the point of -10 and it just holds there, so the agent was just simply spawning and running
+        # into itself immediately to end the game. This is a good example of how things can go awry with what we think
+        # might be a good reward, but it turns out to be no good.To fix this, we can instead just make an offset for the
+        # euclidean distance. I propose something like maybe 250, since our game size is 500x500. When we do this, I can
+        # envision the snake learning to just circle the apple, instead of eating it. The new reward function I propose
+        # to start is:self.total_reward = (250 - euclidean_dist_to_apple)But then, we do want a short term reward for eating
+        # an apple too. It needs to be greater than 250 for sure, but also enough incentive for the apple to move to a
+        # new spot, so maybe 1,000 or 5,000. I really don't know. Something significant for sure. We have to consider
+        # how many steps will it take to get to the new/next apple, and would it wind up being more advantageous for the
+        # agent to just do circles around the apple for a constant ~200-250 reward.
         euclidean_dist_to_apple = np.linalg.norm(np.array(self.snake_head) - np.array(self.apple_position))
-
         self.total_reward = ((250 - euclidean_dist_to_apple) + apple_reward) / 100
 
         #print(self.total_reward)
