@@ -14,3 +14,5 @@ In particular, the third intro is about a customized game where:
 - intro3RLgame.py is the RL classes and environment 
 - intro3checkEnv.py is just to check if there are mistakes
 - intro3final.py is about training the model in the new env
+
+Useful tutorials: https://colab.research.google.com/github/araffin/rl-tutorial-jnrr19/blob/sb3/3_multiprocessing.ipynb#scrollTo=kcYpsA8ExB9T
